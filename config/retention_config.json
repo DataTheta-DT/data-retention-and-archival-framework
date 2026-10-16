@@ -1,0 +1,48 @@
+{
+  "catalog": "workspace",
+  "schema": "retention_framework_",
+  "run_dates": ["2026-04-13", "2026-10-13"],
+  "dry_run": false,
+  "datasets": [
+    {
+      "dataset_name": "orders",
+      "source_file": "data/orders.csv",
+      "columns": [
+        { "name": "order_id", "type": "string" },
+        { "name": "customer_id", "type": "string" },
+        { "name": "product_id", "type": "string" },
+        { "name": "order_date", "type": "date" },
+        { "name": "quantity", "type": "int" },
+        { "name": "unit_price", "type": "double" },
+        { "name": "total_amount", "type": "double" },
+        { "name": "order_status", "type": "string" }
+      ],
+      "key_columns": ["order_id"],
+      "date_column": "order_date",
+      "rules": [
+        {
+          "rule_name": "open_orders",
+          "when": [{ "column": "order_status", "operator": "equals", "value": "Pending" }],
+          "hold": true
+        },
+        {
+          "rule_name": "cancelled_orders",
+          "when": [{ "column": "order_status", "operator": "equals", "value": "Cancelled" }],
+          "archive_after_days": 90
+        },
+        {
+          "rule_name": "high_value_completed",
+          "when": [
+            { "column": "order_status", "operator": "equals", "value": "Completed" },
+            { "column": "total_amount", "operator": "gte", "value": 1500 }
+          ],
+          "archive_after_days": 365
+        },
+        {
+          "rule_name": "other_orders",
+          "archive_after_days": 180
+        }
+      ]
+    }
+  ]
+}

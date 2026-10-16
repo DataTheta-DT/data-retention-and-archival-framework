@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>README — Data Retention and Archival Framework (Solution Accelerator)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --navy: #12233d;
+      --accent: #b3752a;
+      --blue: #1b4f91;
+      --grey: #5b6b7c;
+      --bg-note: #f7f3ec;
+      --bg-warn: #fdf3ea;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      line-height: 1.6;
+      background: #ffffff;
+    }
+
+    header.kicker {
+      text-align: center;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1.doctitle {
+      text-align: center;
+      color: var(--navy);
+      font-size: 34px;
+      margin: 0 0 8px;
+    }
+
+    p.tagline {
+      text-align: center;
+      color: var(--grey);
+      font-style: italic;
+      font-size: 16px;
+      margin: 0 0 28px;
+    }
+
+    h1 {
+      color: var(--navy);
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 8px;
+      margin-top: 48px;
+      font-size: 24px;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 19px;
+      margin-top: 32px;
+    }
+
+    .provenance {
+      background: var(--bg-note);
+      border-left: 5px solid var(--accent);
+      padding: 14px 18px;
+      font-size: 14.5px;
+      color: var(--grey);
+      font-style: italic;
+      margin: 18px 0 28px;
+    }
+
+    code, .code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: #f3f3f3;
+      color: #9a4b13;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 14px;
+    }
+
+    pre {
+      background: #f3f3f3;
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 16px 0 24px;
+    }
+
+    pre code { background: none; padding: 0; color: #1a1a1a; }
+    ol, ul { padding-left: 22px; }
+    li { margin-bottom: 10px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 14.5px;
+    }
+
+    th, td {
+      border: 1px solid #e2e6ec;
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    tr:nth-child(even) td { background: #f5f8fb; }
+
+    .diagram {
+      text-align: center;
+      margin: 24px 0;
+    }
+
+    .disclaimer {
+      background: var(--bg-warn);
+      border-left: 5px solid var(--accent);
+      padding: 16px 18px;
+      font-size: 14px;
+      font-style: italic;
+      color: #6b4a1f;
+      margin-top: 12px;
+    }
+
+    .cta-row {
+      text-align: center;
+      margin: 28px 0 8px;
+    }
+
+    .cta-row a {
+      display: inline-block;
+      margin: 0 10px;
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid var(--blue);
+      padding-bottom: 2px;
+    }
+
+    .cta-row a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--grey);
+      font-size: 12.5px;
+      margin-top: 56px;
+      border-top: 1px solid #e2e6ec;
+      padding-top: 16px;
+    }
+
+    a { color: var(--blue); }
+  </style>
+</head>
+
+<body>
+
+  <header class="kicker">Solution Accelerator</header>
+
+  <h1 class="doctitle">Data Retention and Archival Management Framework</h1>
+
+  <p class="tagline">Keep the data you need, hold what must stay, and archive old records</p>
+
+  <div class="cta-row">
+    <a href="#setup">0. Setup</a>
+    <a href="#pipeline">1. Retention Pipeline</a>
+    <a href="#results">2. Results</a>
+  </div>
+
+  <div class="provenance">
+    The accelerator includes these notebooks in the
+    <a href="https://github.com/DataTheta-DT/data-retention-archival-framework"
+       target="_blank" rel="noopener">data-retention-archival-framework</a><span class="code">/notebooks/</span>:
+    <span class="code">00_Setup.py</span>,
+    <span class="code">01_Retention_Pipeline.py</span>,
+    <span class="code">02_Results.py</span>.
+  </div>
+
+  <h1>What This Accelerator Does</h1>
+
+  <h2>Archive old data and hold what must be kept</h2>
+
+  <p>
+    As business data grows, organizations need a structured approach to managing their data. 
+    This framework uses retention rules to decide which records stay in the
+    active table, which are archived, and which are held.
+    You can update the rules in
+    <span class="code">config/retention_config.json</span> without changing
+    the main pipeline code.
+  </p>
+
+  <p>This accelerator uses Databricks and Delta tables to:</p>
+
+  <ol>
+    <li>Read retention rules from the settings file.</li>
+    <li>Set each record's status to active, hold or archived.</li>
+    <li>Apply the configured rules for records that must be kept.</li>
+    <li>Record run details and display the results.</li>
+  </ol>
+
+  <h2>Record decisions</h2>
+
+  <table>
+    <tr>
+      <th>Decision</th>
+      <th>Meaning</th>
+    </tr>
+    <tr>
+      <td><span class="code">ARCHIVE</span></td>
+      <td>Mark an eligible old record as archived, so it appears in the archive table.</td>
+    </tr>
+    <tr>
+      <td><span class="code">HOLD</span></td>
+      <td>Keep a record that matches a configured hold rule.</td>
+    </tr>
+    <tr>
+      <td><span class="code">KEEP</span></td>
+      <td>Leave a record active because it is not yet eligible for archiving.</td>
+    </tr>
+  </table>
+
+  <p>
+    Record age is calculated using the date column specified in the settings,
+    such as <span class="code">order_date</span>.
+  </p>
+
+  <h1>Architecture</h1>
+
+  <p>
+    The retention pipeline applies the rules and updates the tables.
+    The results notebook displays the output and runs checks.
+  </p>
+
+  <div class="diagram">
+    <svg width="100%" viewBox="0 0 680 340" role="img" style="max-width:640px;">
+      <title>Data retention and archival framework architecture</title>
+      <desc>Source data and a settings file feed the retention pipeline. The results notebook displays the output.</desc>
+
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5"
+                markerWidth="6" markerHeight="6"
+                orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#5b6b7c"
+                stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <rect x="60" y="40" width="260" height="56" rx="8"
+            fill="#f5f8fb" stroke="#5b6b7c" stroke-width="0.75"/>
+      <text x="190" y="60" text-anchor="middle" font-size="14"
+            font-weight="600" fill="#12233d">Source data</text>
+      <text x="190" y="78" text-anchor="middle" font-size="12"
+            fill="#5b6b7c">CSV files in data/</text>
+
+      <rect x="380" y="40" width="260" height="56" rx="8"
+            fill="#eef3fa" stroke="#1b4f91" stroke-width="0.75"/>
+      <text x="510" y="60" text-anchor="middle" font-size="14"
+            font-weight="600" fill="#12233d">Settings</text>
+      <text x="510" y="78" text-anchor="middle" font-size="12"
+            fill="#3c5a80">config/retention_config.json</text>
+
+      <rect x="180" y="136" width="320" height="56" rx="8"
+            fill="#fdf3ea" stroke="#b3752a" stroke-width="0.75"/>
+      <text x="340" y="156" text-anchor="middle" font-size="14"
+            font-weight="600" fill="#6b4a1f">1. Retention Pipeline</text>
+      <text x="340" y="174" text-anchor="middle" font-size="12"
+            fill="#8a6a3d">01_Retention_Pipeline</text>
+
+      <rect x="180" y="232" width="320" height="56" rx="8"
+            fill="#fdf3ea" stroke="#b3752a" stroke-width="0.75"/>
+      <text x="340" y="252" text-anchor="middle" font-size="14"
+            font-weight="600" fill="#6b4a1f">2. Results</text>
+      <text x="340" y="270" text-anchor="middle" font-size="12"
+            fill="#8a6a3d">02_Results</text>
+
+      <path d="M190 96 L190 114 L280 114 L280 134"
+            fill="none" stroke="#5b6b7c" stroke-width="1"
+            marker-end="url(#arrow)"/>
+      <path d="M510 96 L510 114 L400 114 L400 134"
+            fill="none" stroke="#5b6b7c" stroke-width="1"
+            marker-end="url(#arrow)"/>
+      <line x1="340" y1="192" x2="340" y2="230"
+            stroke="#5b6b7c" stroke-width="1" marker-end="url(#arrow)"/>
+    </svg>
+
+    <p style="color:var(--grey); font-style:italic; font-size:13.5px; margin-top:8px;">
+      Run <span class="code">00_Setup</span> first to prepare the data and tables.
+      Then run the pipeline and results notebooks.
+    </p>
+  </div>
+
+  <h2>How it works</h2>
+
+  <ul>
+    <li><strong>Calculate age.</strong> Find how old each record is on the run date.</li>
+    <li><strong>Archive.</strong> Mark eligible records as archived.</li>
+    <li><strong>Apply hold rules.</strong> Keep records that match the configured hold rules.</li>
+  </ul>
+
+  <h1 id="setup">Notebooks</h1>
+
+  <ol>
+    <li>
+      <span class="code">00_Setup</span>:
+      Checks the settings, creates the schema and tables, and loads the source data.
+      Running it again leaves existing tables unchanged.
+    </li>
+    <li id="pipeline">
+      <span class="code">01_Retention_Pipeline</span>:
+      Applies the retention rules, processes eligible records, and logs each run.
+      Use <span class="code">dry_run</span> to preview actions only if all data-changing
+      operations are correctly guarded in the code.
+    </li>
+    <li id="results">
+      <span class="code">02_Results</span>:
+      Displays the output tables and run information.
+    </li>
+  </ol>
+
+  <p>
+    <strong>Run order:</strong>
+    <span class="code">00_Setup</span>,
+    <span class="code">01_Retention_Pipeline</span>, then
+    <span class="code">02_Results</span>.
+    Run each notebook and wait for it to finish before starting the next one.
+  </p>
+
+  <h2>Output tables</h2>
+
+  <p>
+    <span class="code">&lt;dataset&gt;</span> refers to the dataset name
+    in the settings file.
+  </p>
+
+  <table>
+    <tr>
+      <th>Table</th>
+      <th>What it holds</th>
+    </tr>
+    <tr>
+      <td><span class="code">&lt;dataset&gt;_records</span></td>
+      <td>All records with a status of active, hold or archived, plus archive date, run ID and rule.</td>
+    </tr>
+    <tr>
+      <td><span class="code">&lt;dataset&gt;_active</span></td>
+      <td>View of records that remain active, including records kept by hold rules.</td>
+    </tr>
+    <tr>
+      <td><span class="code">&lt;dataset&gt;_archive</span></td>
+      <td>View of archived records, including archive date and run ID.</td>
+    </tr>
+    <tr>
+      <td><span class="code">ctl_retention_run_log</span></td>
+      <td>Run details, including record counts, mode, and status.</td>
+    </tr>
+  </table>
+
+  <h1 id="own-data">Use It For Your Own Dataset</h1>
+
+  <p>
+    To use your own dataset, update
+    <span class="code">config/retention_config.json</span>
+    and run the notebooks.
+  </p>
+
+  <ol>
+    <li>Choose the date column used to calculate record age.</li>
+    <li>Set the archive limit in days.</li>
+    <li>Configure the rules that determine which records to keep, archive, or hold.</li>
+  </ol>
+
+  <p>
+    The setup notebook checks the configuration and reports errors, such as a hold
+    rule that has day limits. Use
+    <span class="code">yyyy-MM-dd</span> for dates. Set a fixed
+    <span class="code">as_of_date</span> for repeatable results, or
+    <span class="code">"today"</span> to use the current date.
+  </p>
+
+  <h1>Sample Output</h1>
+
+  <p><strong>Archive Table:</strong></p>
+
+  <div style="overflow-x:auto;">
+    <table>
+      <tr>
+        <th>order_id</th><th>customer_id</th><th>product_id</th>
+        <th>order_date</th><th>quantity</th><th>unit_price</th>
+        <th>total_amount</th><th>order_status</th><th>archived_on</th>
+        <th>archive_run_id</th><th>archive_rule</th>
+      </tr>
+      <tr>
+        <td>ORD0036</td><td>CUST0008</td><td>PROD004</td>
+        <td>2025-07-05</td><td>9</td><td>121.10</td>
+        <td>1089.90</td><td>Completed</td><td>2026-04-13</td>
+        <td>R001</td><td>other_orders</td>
+      </tr>
+      <tr>
+        <td>ORD0037</td><td>CUST0008</td><td>PROD010</td>
+        <td>2025-08-25</td><td>1</td><td>153.25</td>
+        <td>153.25</td><td>Completed</td><td>2026-04-13</td>
+        <td>R001</td><td>other_orders</td>
+      </tr>
+      <tr>
+        <td>ORD0046</td><td>CUST0003</td><td>PROD008</td>
+        <td>2025-11-13</td><td>5</td><td>123.72</td>
+        <td>618.60</td><td>Cancelled</td><td>2026-04-13</td>
+        <td>R001</td><td>cancelled_orders</td>
+      </tr>
+      <tr>
+        <td>ORD0049</td><td>CUST0006</td><td>PROD007</td>
+        <td>2024-11-29</td><td>7</td><td>227.07</td>
+        <td>1589.49</td><td>Completed</td><td>2026-04-13</td>
+        <td>R001</td><td>high_value_completed</td>
+      </tr>
+      <tr>
+        <td>ORD0024</td><td>CUST0001</td><td>PROD011</td>
+        <td>2026-03-01</td><td>5</td><td>243.20</td>
+        <td>1216.00</td><td>Cancelled</td><td>2026-10-13</td>
+        <td>R002</td><td>cancelled_orders</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <h1>Prerequisites</h1>
+
+  <ul>
+    <li>A Databricks workspace.</li>
+    <li>Permission to create schemas and tables in the catalog.</li>
+    <li>Delta tables, which are supported by Databricks.</li>
+    <li>CSV files with column names matching the settings file.</li>
+  </ul>
+
+  <h1>License</h1>
+
+  <p>
+    Copyright &copy; 2026 the notebook authors. The notebooks are provided under
+    the Apache 2.0 License. Third-party libraries follow their own licences.
+  </p>
+
+  <table>
+    <tr><th>Library</th><th>License</th><th>Source</th></tr>
+    <tr>
+      <td>Apache Spark / PySpark</td>
+      <td>Apache License 2.0</td>
+      <td>
+        <a href="https://github.com/apache/spark" target="_blank" rel="noopener">
+          github.com/apache/spark
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>Delta Lake</td>
+      <td>Apache License 2.0</td>
+      <td>
+        <a href="https://github.com/delta-io/delta" target="_blank" rel="noopener">
+          github.com/delta-io/delta
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <p><strong>Author:</strong> DataTheta &ndash; Data Platform Engineering</p>
+
+  <h1>Disclaimers</h1>
+
+  <div class="disclaimer">
+    This accelerator is provided for guidance only. Choose suitable retention rules, test the pipeline carefully,
+    and check the results before using it in production.
+  </div>
+
+  <h2 style="text-align:center; border:none; margin-top:40px;">
+    Ready to get started?
+  </h2>
+
+  <div class="cta-row">
+    <a href="#setup">0. Setup</a>
+    <a href="#pipeline">1. Retention Pipeline</a>
+    <a href="#results">2. Results</a>
+  </div>
+
+
+</body>
+</html>
